@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>복합구조의 레이아웃</title>
+<style>
+    #navi{
+        background-color: khaki;
+        width: 700px;
+        height: 100px;
+    }
+    #side{
+        background-color: palegreen;
+        width: 100px;
+        height: 550px;
+        /* 그 아무도 수평공간에 허용하지 않는 block속성을 버리게 하는 방법.
+        inline으로 바꾸는 방법 */
+        display: inline-block; /*inline과 block의 특징을 모두 가지는 속성*/
+    }
+    #content{
+        background-color: plum;
+        width: 600px;
+        height: 550px;
+        /*div는 block의 특징을 갖고 있다. */
+        display: inline-block;
+    } 
+    /* 
+    #s{
+        background-color: plum;
+    } 
+    #s2{
+        background-color: khaki;
+    }
+    #d{
+         background-color: palegreen;
+
+    }
+    */
+</style>
+</head>
+<body>
+    <!-- 모든 태그는 박스모델로 간주하며, 속성은 block(막음) or inline으로 나뉨.
+    Block: 나와 같은 수평 공간에 어떤 누구도 허용하지 않음.
+            크기를 지정 할 수 있다. (widh와 height 지정 가능)
+    Inline: 다른 태그 요소들과 수평공간에 공존 가능.
+            크기를 지정 할 수 없다. (내부의)
+     <span id="s"> I am span </span>
+     <span id="s2"> I am span2 </span> 
+     <div id="d"> I am Divided </div> 
+       즉, Span은 Inline Div는 Block -->
+     <!-- 왜 모든 태그는 왼쪽 상단으로 향하는가?
+            - 왼쪽 상단을 기준으로 했기 때문에 (왼쪽에서 오른쪽으로 읽음)
+              모든 태그는 개발자가 포지션을 정하지 않아도 
+              이미 왼쪽 상단 기준으로 한 포지션이 디폴트로 지정.
+              그래서 이러한 포지션을 position:relative; 라고 함.
+            Why relative 라고 했을까?
+             -->
+
+    <div id="navi">네비</div>
+    <div id="side">사이드</div>
+    <div id="content">콘텐트</div>
+
+</html>

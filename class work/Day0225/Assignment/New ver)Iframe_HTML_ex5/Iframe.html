@@ -1,0 +1,37 @@
+<!-- 크기와 위치가 자유로운 프레임
+기존 프레임의 단점:
+1. 화면을 무조건 분할 시킴(위, 아래 또는 좌,우)
+2. 크기를 조절 할 수 없다.
+3. 분할 시 컨텐츠를 보여줄 수 있는 공간이 좁다.
+그래서 이 단점을 극복한 Iframe이 등장.
+Iframe 이람 크기와 위치를 자유롭게 설정 할 수 있는 개선된 프레임
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+    /*누구에 대해 무엇을?*/
+    .f1{
+        position: absolute;
+        left: 200px; /* X축 */
+        top: 300px; /* Y축 */
+        width: 400px;
+        height: 450px;
+    }
+    .f2{
+        position: absolute;
+        left: 500px; /* X축 */
+        top: 300px; /* Y축 */
+        width: 400px;
+        height: 450px;
+    }
+</style>
+</head>
+<body>
+   <iframe src="http://nate.com" class="f1"> </iframe>
+   <iframe src="http://nate.com" class="f2"> </iframe>
+</body>
+</html>

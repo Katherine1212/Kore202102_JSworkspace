@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switch effect</title>
+    <style>
+        #wrapper{
+            background: url("../Images/room.jpg");
+            width: 1000px;
+            height: 900px;
+            background-size: 1000px,622px;
+            position: relative;
+        }
+        #wrapper img{
+            width: 45px;
+            position:absolute;
+            left: 0px;
+            top: 0px;
+        }
+        #surface{
+            background-color: black;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+    </style>
+    <script>
+        // 스위치 켜고 끄는 함수
+        var op=0.8;
+        var flag=true; //true or fale 값을 대입 할 변수
+        //  var light=src="../Images/switch_on.png"
+        //  var on=true;
+         var bwImg="../Images/button/switch_on.png"; //스위치 이미지
+        function turn(){
+            // 문서 내 surface라고 불리는 요소의 opacity 값을 0,0.8
+            op= (flag)? 0:0.8;
+         document.querySelector("#surface").style.opacity=op;
+         flag=!flag; //기존 값을 뒤집자! 뒤집으려면 논리값이 최고!
+
+         
+        //   light= (on)? src="../Images/button/switch_on.png": src="../Images/switch_off.png";
+        //   document.querySelector("#wrapper img").src=light;
+        //   on=!on;
+
+        // 풀의ver
+        // 결론 이미지명은 결정되지 않은 변수로 가자~
+        swImg=(flag)? "../Images/button/switch_on.png":"../Images/button/switch_off.png";
+         document.querySelector("#wrapper img").src="../Images/"+swImg+".png";
+        }
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="surface"></div>
+        <img src="../Images/button/switch_off.png" onclick="turn()">
+        
+    </div>
+  
+</body>
+</html>

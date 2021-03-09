@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slideshow</title>
+    <style>
+        #wrapper{
+            width: 600px;
+            height: 600px;
+            margin: auto;
+            /* text-align: center; */
+        }
+        #pic{
+            width: 100%;
+            height: 550px;
+            background-color: lightsalmon;
+        }
+        #pic img{
+            /* pic 안에 있는 img도 가능. 아니면 class 나 id 부여 */
+            width: 100%;
+            height: 100%;
+            /* object-fit: cover; 사진 조절 */
+            }
+        #key{
+            position: relative;
+            width: 100%;
+            height: 50px;
+           
+        }
+        #key img{
+            width: 50px;
+        }
+        .r-btn{
+            position: absolute;
+            right: 0px;
+        }
+       .l-btn{
+           position: absolute;
+           left: 0px;
+       }
+    </style>
+    <script>
+        // 문서 내 src 값 변경
+        var n=1;
+        function rb(){
+            n=n+1;
+            document.querySelector("#pic img").src="../Images/kidding bear/a"+n+".png";
+        }
+        function lb(){
+            n=n-1;
+            document.querySelector("#pic img").src="../Images/kidding bear/a"+n+".png";
+        }
+    </script>
+   
+</head>
+<body>
+    <div id="wrapper">
+        <div id="pic">
+            <img src="../Images/kidding bear/a1.png">
+        </div>
+        
+            <div id="key">
+                <img id="bt1" src="../Images/button/L_btn.png" class="l-btn" onclick="lb()">
+                <img id="bt2" src="../Images/button/R_btn.png" class="r-btn" onclick="rb()">
+            </div>
+        
+
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<script>
+//body 태그에 키보드 이벤트 핸들러 연결
+window.addEventListener("load",function(){
+/*문서가 로드 되고 나면 body요소에 키보드 이벤트 연결 해 보자
+addEventListener의 호출 대상이 되는 익명함수에 변수를 정의하면
+이벤트 객체를 받을 수 있다. 즉, 이벤트 객체를 직접 호출해도 되나
+익명함수로 넘겨 받을 수 있다. */
+    document.body.addEventListener("keydown",function(e){
+        // console.log("e의 정체는 ",e);
+        //위, 아래, 좌, 우에 대해 적절한 메세지를 출력해본다.
+        //만일  if~ 조건으로 처리 할 경우 적절한  if(if(단일),else if(다중), if~else(흑백논리))
+        /* [Option1. Use if~else if~else]
+       if(e.keyCode==37){
+            console.log("left");
+        }else if(e.keyCode==38){
+            console.log("Top");
+        }else if(e.keyCode==39){
+            console.log("Right");
+        }else if(e.keyCode==40){
+            console.log("Bottom");
+        }else{
+            console.log("Please press the key");
+        }
+        */
+       //[Option2. Switch~case문]
+       switch(e.keyCode){
+           //break 안 걸면 아래문장까지 읽힘. 
+           //break 사용하면 해당 조건에 만족하면 다른 문장은 읽지 않음.
+           case 37:console.log("Left");break; //37번일때
+           case 38:console.log("Top");break; 
+           case 39:console.log("Right");break;
+           case 40:console.log("Bottom");break;
+           default:console.log("Please press the key");
+       }
+
+    });
+});
+</script>
+</head>
+<body>
+
+</body>
+</html>

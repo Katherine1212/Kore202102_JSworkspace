@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+</head>
+<style>
+    body{
+        background-image: url(../Images/background/bg.jpg);
+        background-repeat: no-repeat;
+        background-size:cover;
+    }
+/* HTML 문서 내에 있는 모든 컨텐츠는 반드시 마크업해야 원하는 디자인 효과를 볼 수 있다.
+주인공 위치를 원하는 곳에 두려면, HTML상 원래 불가능하다. 다만, CSS 이용하면 이 한계를 극복이 가능하다.
+이 예제에서는 스타일 시트의 위치 지정 속성을 배워보자.*/
+.plain{
+    width: 100px;
+    position: absolute; /*absolute 절대 위치*/
+    left: 400px;/* X축 값을 숫자만큼 증가*/
+    top: 200px;/* Y축 값을 숫자만큼 증가*/
+}
+</style>
+<body>
+    <img src="../Images/other icons/Plain.png" class="plain">
+</body>
+</html>

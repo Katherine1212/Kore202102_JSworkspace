@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>game_keyboard</title>
+<style>
+    #wrapper{
+        margin: auto;
+        width: 900px;
+        height: 650px;
+        background-image: url(../Images/background/bg.jpg);
+        background-size: 900px 650px;
+        background-repeat: repeat-x; /*수평방향으로 배경 패턴 적용*/
+        position: relative; /*자식때문에*/
+        overflow: hidden;
+    } 
+</style>
+<script>
+    var img; //다른 함수에서도 접근 가능하게 하려면 전역변수로 선언.
+            // 장점) 프로그램이 종료될 때 까지 그 값을 사용 가능.
+    var n=0; //프로그램 끝날 때까지 값이 10씩 누적될 용도이므로 전역변수로 선언.
+    var m=200;
+    var container; //문자,숫자,논리값이 아닌 객체형이기 때문에 따로 초기값 선언 안 함.
+    var bgX=0; //숫자값은 반드시 초기화 시켜주자. -> 연산의 가능성이 높기 때문에 undefined인 경우 데이터베이스의 null과 같아서 연산 대상에 미포함.
+    function init(){
+        //우주선을 디자인적으로 생성하지 말고 프로그래밍적으로 생성.
+        img=document.createElement("img"); //기존에 없던 요소를 생성.
+        img.src="../Images/other icons/plane.png";
+        img.id="hero"; //프러그래밍적으로 아이디 부여.
+        img.style.width=100+"px";
+        img.style.height=60+"px";
+        //포지션도 지정하자
+        img.style.position="absolute";
+        img.style.left=0+"px";
+        img.style.top=m+"px";
+        
+        container=document.getElementById("wrapper");//기존에 존재하던 것을 가져올 때
+        //wrapper에 img를 자식 요소로 부착. [container에 img 부챡]
+        container.appendChild(img);
+        setInterval("moveBg()",10);
+    }
+    function joystick(){
+        // alert("띵동");
+        //우주선을 x축 방향으로 증가(우측 이동 효과)
+        /*사용자가 키보드를 입력 할 때, 키보드의 각 영문 철자 하나 하나마다, 1:1로 대응하는
+        아스키코드로 변환되어 컴퓨터애 전달되어 지는데,
+        그 이유는 컴퓨터는 0과 1만 이해하기 때문.
+        각, 키보드의 영문철자를 이진수로 변환한게 아스키 코드.
+        개발자가 아스키 코드를 다 암기하는가? -> no
+        해결책) 모든 프로그래밍 언어는 아스키코드를 반환하는 기능이 있다.*/
+        //console.log("당신이 누른 철자의 매칭되는 아스키 코드는",event.keyCode);
+        // 좌:37 위:38 우:39 아래:40
+
+        if (event.keyCode==39){
+            n+=10; //전역변수에 10씩 누적.
+            //우주선을 x축 방향으로 증가(우측 이동 효과)
+            img.style.left=n+"px";
+        }
+        if(event.keyCode==37){
+            n-=10;
+            //우주선을 x축 방향으로 감소(좌측 이동 효과)
+            img.style.left=n+"px";
+        }
+         if(event.keyCode==38){
+             m-=10;
+             //우주선을 y축 방향으로 감소(위쪽 이동 효과)
+             img.style.top=m+"px";
+         }
+        if(event.keyCode==40){
+            m+=10;
+            //우주선을 y축 방향으로 증가(아래쪽 이동 효과)
+            img.style.top=m+"px";
+        }
+        //컨테이너의 배경 이미지 좌표 변경
+        
+        
+    }
+    function moveBg(){
+        // 배경의 x좌표 값은 프로그램이 끝날 때 까지 음수 방향으로 누적되어야하므로 전역변수 선언
+        bgX--; //bgX=bgX-1;
+        container.style.backgroundPosition=bgX+"px 0px";
+
+           //moveBg();//속도를 늦추는 법
+           //setTimeout("moveBg()",10); /*지정한 함수를 지정한 시간 뒤에 호출. 
+           // 1/1000초 단위까지 표현가능.-> moveBg로 재귀 호출 하므로서 무한루프로 이용. 
+        /*
+        setInterval()은 무한 호출.
+        serTimeout()은 1회 호출. 무한루프 효과를 내려면 재귀호출로 이용!
+        */
+        }
+</script>
+</head>
+<!-- <body onLoad='init(); moveBg()' onkeydown="joystic()"> -->
+    <body onLoad='init();' onkeydown="joystick()">
+    <!-- onload는 문서내용을 다 읽으면 호출./ 
+        "alert('문서 내용 다 읽었어.'),init();"
+        얼럿 안에를 "" 안 쓴 이유는 앞에서부터 읽기 때문에 컴퓨터는 "얼럿("문서내용 다 읽었어. "),Init();"로 읽힘.
+        문자열을 감싸는 기능을 갖는 특수문자에("",'') 역슬래시(\)를 붙이면 일반 문자가 된다. escape
+         onLoad='alert("키 \"눌렀어? \" ");init();'
+        옵션 2 문서 내용이 다 읽혔을 때 onLoad되는 방법(함수가 있을 때는 주로 사용됨.) -->
+    <div id="wrapper"></div>
+
+    <!-- <script>
+        // 옵션 1 문서 제일 아래에 쓰는 방법.
+        // init();
+    </script> -->
+</body>
+</html>

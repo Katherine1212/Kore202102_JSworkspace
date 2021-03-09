@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation</title>
+<style>
+    #ball{
+        position: absolute;
+        left: 200px;
+        top: 150px;
+        /* 사용 할 애니메이션에 대한 호출 */
+        animation-name: ball-rotate;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+    }
+/* 애니메이션 정의하기 */
+@keyframes ball-rotate{
+    from{transform: rotate(0deg);} /*시작 속성*/
+    to{transform: rotate(180deg);} /*끝 속성*/
+}
+
+</style>
+</head>
+<body>
+    <img id="ball" src="../Images/other icons/baseball.png" alt="baseball">
+</body>
+</html>

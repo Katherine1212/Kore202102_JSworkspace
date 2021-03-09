@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>복합구조의 레이아웃</title>
+<style>
+    #navi{
+        background-color: khaki;
+        width: 700px;
+        height: 100px;
+    }
+    #side{
+        background-color: palegreen;
+        width: 100px;
+        height: 550px;
+       float: left; /*물체를 공중으로 부양. 부양 방향은 좌측으로. 플롯 방식은 고전.*/
+    }
+    #content{
+        background-color: plum;
+        width: 600px;
+        height: 550px;
+        float: left;
+    } 
+    #rapping{
+        width: 700px;
+        height: 650px;
+        margin: auto;
+        /* margin-left: 300px; 좌측 기준으로 x축 양의 방향으로 300Px 떨어지게 함 */
+        /* 좌,우측의 남는 여백을 2분하여 동일하게 좌우 마진을 적용하는 방법 */
+    }
+
+</style>
+</head>
+<body>
+    <div id="rapping">
+        <div id="navi">네비</div>
+        <div id="side">사이드</div>
+        <div id="content">콘텐트</div>
+    </div>
+</html>

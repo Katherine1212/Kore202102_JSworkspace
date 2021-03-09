@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #bear{
+            width: 200px;
+            position: absolute;
+            left: 0px;
+            top:200px;
+        }
+    </style>
+    <script>
+        var x=0; //곰의 좌표
+        var step=0;//증가할지 감소할지를 결정할 변수.
+        var flag=true
+        var st;
+        function move(){
+            // 문서 내의 bear 라는 요수의 style 중 left 값을 증가 시키다가 
+            // 500px에 도달하면 감소시키고, 다시 0px에 도달하면 증가 시킨다.
+           step= (flag)? 10:-10;
+            x= x+step;
+            document.querySelector("h1").innerText=x+"px";
+            document.getElementById("bear").style.left=x+"px"; //id가 명시 되어있으므로 #빼기
+            //개발자는 플래그만 만지면 공의 방향이 바뀔 수 있다!
+            flag=(x>=500||x<=0)? !flag:flag
+            //flag= (x>=500)? false:((x<=0)? true:flag); 돌아는 가나.. 식이 길어짐.
+        }
+        function auto(){
+            //사용자 대신 컴퓨터가 수동함수를 호출.
+            //따라서 언제나 수동로직을 먼저 작성 후 자동 양식을 만들어라.
+            st= setInterval("move()",100);
+            //더이상 자동버튼을 못 누르게 비활성화 시키기
+
+        }
+        function stop(){
+            //setInterval 멈추기 위해 clearInterval(현재 진행중인 Interval삽입.)
+            clearInterval(st);
+        }
+    </script>
+</head>
+<body>
+    <button onclick="move()">Move</button>
+    <button onclick="auto();this.disabled=true">Auto</button>
+    <button onclick="stop()">Stop</button>
+    <h1>0px</h1>
+    <img id="bear" src="../Images/kidding bear/a3.png">
+</body>
+</html>

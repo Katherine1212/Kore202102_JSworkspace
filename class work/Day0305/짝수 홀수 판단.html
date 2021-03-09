@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>짝수 홀수 판단</title>
+</head>
+<body>
+    <h1>판단결과 나올 곳</h1>
+
+<!-- function없이 js작성
+요즘 트렌드는 바디 안에 스크립트 넣어서 . 하지만 함수 스면 헤드에!! -->
+<script>
+    var msg; //짝수,홀수라는 문자열을 담게 될 변수
+    var result=prompt("원하는 수를 입력하세요."); //입력메세지 창
+    //alert("당신이 입력한 값은"+result);
+
+    //불량 유저가 숫자를 넣지 않고 문자를 넣을 경우 처리하려면?
+    // isNaN(result); //is Not a Number
+    var anw=(isNaN(result))? "숫자가 아니잖아!":"숫자다."
+    alert(anw);
+    msg=(result%2==0)? "짝수":"홀수";
+     document.querySelector("h1").innerText=msg+"입니다.";
+</script>
+</body>
+</html>

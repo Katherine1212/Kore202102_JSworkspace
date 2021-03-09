@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+    #bear{
+        position: absolute;
+        top: 200px;
+        left: 10px;
+
+    }
+</style>
+<script>
+    // 목표- 문서 내 농담곰 요소의 left값을 변경 시키고 정보돋 갱신 시키자.
+    var n=0;
+    var bearMove=true;
+ 
+    function move(){
+        // h1태그 안 쪽에 좌표 텍스트 출력
+        (bearMove)? n+=10:n-=10;
+        document.querySelector("h1").innerText="x값:"+n;
+
+        //증가 시킨변수를 농담곰의 좌표에도 써먹어보자.
+        document.querySelector("#bear").style.left=n+"px";
+        ((n==500)||(n%500==0))? bearMove=!bearMove:null;
+        //이 경우는 증가값이 홀수인 경우 조건에 맞지 않을 수 있기 때문에 범위로 잡아야 한다.
+        //flag=(n>=500||n<=0)? !n:n; 처엄 범위로 잡아야 함.
+
+        //500px에 도달 시 농담곰의 좌표가 감소되어야 하며, 다시 0에 도달시 다시 증가.
+        //n%500==0
+        //hint: 삼항과 %연산자 이용
+        
+        
+       
+    }
+</script>
+</head>
+<body>
+    <button onclick="move()">Move</button>
+    <h1>x값:0</h1>
+    <img src="../Images/kidding bear/a4.png" width="200px" id="bear">
+</body>
+</html>

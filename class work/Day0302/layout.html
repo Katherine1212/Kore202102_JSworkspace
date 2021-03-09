@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layout</title>
+<style>
+    /* CSS의 문법 형식은 '누구를 어떻게'
+        누구 자리에 오는 문법 요소를 선택자(selector) */
+    .wrapper{
+        background-color: blanchedalmond;
+        width: 600px;
+        height: 600px; 
+        margin: auto; /* 전체 웹페이지 너비에서 600 뺀 나머지를 
+        2분할 하여 양쪽 동등하게 마진값으로 적용 */
+    }
+    #top-div{
+        width: 100%; /* 부모 컨테이너의 너비까지 확장. 우리의 경우 600까지 도달*/
+        height: 100px;
+        background-color: cornflowerblue;
+        margin: auto;
+    }
+    #side-div{
+        width: 100px;
+        height: 400px;
+        background-color:darkseagreen;
+        float: left;
+    }
+    #content-div{
+        width: 500px;
+        height: 400px;
+        background-color: lightslategray;
+        float: right; /*float: left 나 right 둘 다 가능*/
+    }
+    #footer-div{
+        width: 100%;
+        height: 100px;
+        background-color:darkcyan;
+        clear: both; /* float 된 공간을 메꾸지 않는다*/
+    }
+    .top-navi{
+        background-color:darkolivegreen;
+        /*자식들이 float 처리 된 경우 부모에는 반드시 overflow:hidden 속성을 지정*/
+        overflow: hidden;
+    }
+    /* 제한된a top-navi 클래시가 적용된 안족 자식 요소들 중에 a*/ 
+    .top-navi a{
+        text-decoration: none; /*링크 밑줄 삭제*/
+        font-size: 18px;
+        padding-left: 16px;
+        padding-right: 16px;
+        border: 1px solid #000000;
+        float: left;
+    }
+    #cs{
+        float: right;
+    }
+    /* a태그에 마우스 올렸을 때 배경색 주기 
+        마우스가 올라간 a= a:hover
+        hover는 태그가 아님. 유사 태근(pseudo 수도)*/
+    .top-navi a:hover {
+        background-color: goldenrod;
+    }
+</style>
+</head>
+<body>
+    <!-- 모든 div를 감쌀 최상위 부모 컨테이너 -->
+    <div  class="wrapper">
+        <!-- clss-중복 가능, id- 중복 불가, 꼭 하나만 쓰기. 중복되면 꼬임 -->
+        <div id='top-div'>
+            <div class="top-navi">
+                <a href="#"> Home</a>
+                <a href="#"> Shopping</a> 
+                <a href="#"> Mypage</a> 
+                <div>
+                    <a href="#" id='cs'> Customer Service</a>
+                </div>
+            </div>
+        </div>
+        <div id='side-div'>side</div>
+        <div id='content-div'>content</div>
+        <div id='footer-div'>footer</div>
+    </div>    
+</body>
+</html>

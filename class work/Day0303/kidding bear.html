@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kidding bear</title>
+<style>
+    #kidding{
+        width: 300px;
+        height: 300px;
+        border: 2px dotted black;
+        border-radius: 50%;
+    }
+    #wrapper{
+        margin: auto;
+        width: 320px;
+        height: 320px;
+        text-align: center;
+    }
+</style>
+<script>
+    var r=0;
+    function rotate1(){
+        r=r+5;
+        //문서 내의 농담곰이라는 요소의 style 중 rotate 속성값 증가
+        document.querySelector("#kidding").style.transform="rotate("+r+"deg)";
+    }
+    function rotate2(){
+        r=r-5;
+        document.querySelector("#kidding").style.transform="rotate("+r+"deg)";
+    }
+</script>
+</head>
+<body>
+    <div id="wrapper">
+        <img src="../Images/kidding bear/a1.png" id="kidding">
+        <p/>
+        <button onclick="rotate1()">시계방향</button>
+        <button onclick="rotate2()">반시계방향</button>
+    </div>
+    
+</body>
+</html>
