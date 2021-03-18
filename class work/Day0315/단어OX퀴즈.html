@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+.wrapper{
+    width: 500px;
+    height: 700px;
+    background-color: darkseagreen;
+    margin: auto;
+}
+
+#ex{
+    width: 100%;
+    height:200px ;
+    background-color: antiquewhite;
+    font-size: 100px;
+    text-align: center;
+}
+
+#ans{
+    height:150px ;
+}
+#ans input{
+width:98%;
+height:100%;
+background-color:silver;
+color: white;
+font-weight: bold;
+font-size:85px;
+text-align:center;
+}
+
+#ox{
+    width:100%;
+    height:200px ;
+    font-size: 120px;
+    background-color:thistle;
+    color: red;
+    text-align: center;
+}
+
+#score{
+    width:100%;
+    height:150px;
+    font-size: 100px;
+    font-weight: bold;
+    color:black;
+    background-color: lightblue;
+    text-align: center;
+}
+</style>
+<script>
+var word=["마우스","키보드","핸드폰","주식","비트코인","코로나","샤프","지갑","핸드폰","가방"];
+var answer;
+var msg;
+var ox;
+var score;
+var ex;
+var index=0; //배열을 접근 할 때 사용할 인덱스 변수
+var n=0; //점수가 누적 될 전역 변수
+
+function enter(){
+// 엔터시만 아래의 코드가 수행해야하라면 조건문 이용.
+    if(event.keyCode==13){ //엔터치면(13번이 아스키 코드로 엔터)
+        //아래의 코드는 맞는 단어를 입력 할 시에만 수행.
+        if(ex.innerText==msg.value){
+            index++
+            printWord();
+            // [정답 표시]
+            ox.innerText="O";
+            // [점수 부여]
+            n+=10;
+            score.innerText=n+"점"; 
+        }else{
+            //[틀려도 다음문제로 넘어가도록]
+            index++ 
+            printWord();
+            //[오답표시]
+            ox.innerText="X";
+        }
+        msg.value=""; //--------------------------------------------------입력한 텍스트를 지우기
+    }
+    // [문제 소진 시 종료 안내 멘트.]
+    if(index>9){
+        alert("문제가 종료되었습니다.");
+        ox.innerText="End"    
+    }  
+}
+
+function init(){
+    ex=document.getElementById("ex");
+    answer=document.getElementById("answer");
+    ox=document.getElementById("ox");
+    score=document.getElementById("score");
+    msg=document.getElementById("massage");
+}
+
+// [유저가 보게 될 문제]
+function printWord(){
+    ex.innerText=word[index];
+}
+
+window.addEventListener("load",function(){
+    init();
+    printWord();
+
+    //프로그램 가동과 동시에 커서를 텍스트박스에 위치
+    msg.focus(); //--------------------------------------------------------------커서 올리기
+});
+</script>
+</head>
+<body>
+<div class="wrapper">
+    <div id="ex"></div>  <!-------------------------------------------------------- 문제 -->
+    <div id="ans">      <!----------------------------------------------------------답변 -->
+        <input type="text" placeholder="정답 입력" id="massage" onkeyup="enter()">
+    </div>
+    <div id="ox"></div> <!-------------------------------------------------------- O,X여부 -->
+    <div id="score">0점</div> <!--------------------------------------------------- 점수 -->
+</div>
+</body>
+</html>

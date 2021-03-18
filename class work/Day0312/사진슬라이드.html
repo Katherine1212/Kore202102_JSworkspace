@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+
+<style>
+.wrapper{
+    width: 500px;
+    height: 400px;
+    background-color: bisque;
+    margin: auto;
+    position: relative; /* 자식인 포토프레임-컨테이너 때문에 명시 */
+    
+}
+#photo-frame{
+    width: 500px;
+    height: 340px;
+    background-color: darkgray;
+    overflow: hidden;
+    position: relative; /* 자식인 컨테이너 때문에 명시 */
+}
+#navi{
+    width: 500px;
+    height: 60px;
+    text-align: center;
+    font-size: 30px;
+}
+#container{
+    width: 3500px;
+    height: 340px;
+}
+#container img{
+    float: left;
+}
+
+/* #navi a{ 
+    cursor: pointer;
+}*/
+#navi a{
+    text-decoration: none; /* 링크 밑줄 없애기 */
+}
+/* pseudo: 수도라고 읽음 뜻은 가짜의 
+가상 태그(태그의 상태 마저 선택자가 될 수 있다.*/
+#navi a:hover{
+    color: indianred;
+}
+</style>
+<script>
+// 포지션 제어를 위해 문서 로드와 동시에 컨테이너에서 앱솔루트 적용
+var container; // 모든 함수에서 접근하기 위해
+var taregetX=-3000;
+var a=0.1; //비율계수 숫자가 커지면 거질 수록 걸음이 커짐(0.1~1사이로 조절)
+ // 컨테이너의 X좌표를 담을 변수
+function init(){
+    container= document.getElementById("container");
+    container.style.position="absolute"; // absolute= 부모를 기준으로 한 위치 속성
+    container.style.top=0+"px"; // top값은 안 만져도 되나 지정하려면 0px로(좌우만 만질거라서)
+    container.style.left=0+"px"; //초기화
+    setInterval("move()",10);
+}
+// 컨테이너 이동시키기
+function move(){
+    // taregetX=x
+    // container.style.left=taregetX+"px"; // 순간이동
+    // parseFloat=실수 parseInt=정수
+    //  내위치=현재위치+비율*(목표지점-현재위치)
+    container.style.left=parseFloat(container.style.left)+a*(taregetX-parseFloat(container.style.left))+"px";
+    // setTimeout("move()",10); //클릭 한 만큼 생성. 무한.(완저 컴퓨터 저승 보내는 코드)
+}
+function setTarget(x){
+    taregetX=x; // 새로운 목표지점 생성.
+}
+window.addEventListener("load",function(){
+    init();
+    
+});
+</script>
+</head>
+<body>
+<div class="wrapper">
+    <div id="photo-frame">
+        <!-- 길다란 사진을 모아둔 컨테이너 -->
+        <div id="container">
+            <img src="../Images/shurek/img0.jpg">
+            <img src="../Images/shurek/img1.jpg">
+            <img src="../Images/shurek/img2.jpg"> 
+            <img src="../Images/shurek/img3.jpg">
+            <img src="../Images/shurek/img4.jpg">
+            <img src="../Images/shurek/img5.jpg">
+            <img src="../Images/shurek/img6.jpg">
+        </div>
+    </div>
+    <div id="navi">
+        <!-- html내에서 JS를 작성 할 수 있는 영역은?
+        1.Script안에
+        2. Event handdler안에
+        3. a href안에도 가능하나 단, javascript를 꼭 명시 -->
+       <a href="javascript:setTarget(0)">●</a> 
+       <a href="javascript:setTarget(-500)">●</a> 
+       <a href="javascript:setTarget(-1000)">●</a> 
+       <a href="javascript:setTarget(-1500)">●</a> 
+       <a href="javascript:setTarget(-2000)">●</a> 
+       <a href="javascript:setTarget(-2500)">●</a> 
+       <a href="javascript:setTarget(-3000)">●</a> 
+
+    </div>
+</div>
+</body>
+</html>

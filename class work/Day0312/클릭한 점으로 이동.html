@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pocketmoster</title>
+<style>
+    .wrapper{
+        width: 100%;
+        height: 700px;
+        background-color:whitesmoke;
+        position: relative;
+    }
+    body{margin: 0px;}
+    #pica{
+        width: 100px;
+    }
+    #pocketBall{
+        width: 100px;
+        position: absolute;
+        right: 500px;
+        top: 100px;
+        float: left;
+    }
+</style>
+<script>
+var pica;
+// 도달할 목표지점
+var targetX=0; 
+var targetY=0;
+var a=0.1;
+function init(){
+    pica= document.getElementById("pica");
+    pica.style.position="absolute";
+    pica.style.left=0+"px";
+    pica.style.top=100+"px";
+}
+// x=324 y=105볼위치
+
+// 피카츄가 도달 할 목표 지점 구하기.
+function getPos(){
+    // 피카츄의 목표지점
+    targetX= event.clientX;
+    targetY= event.clientY;
+    console.log("x=",targetX,"y=",targetY);
+}
+function move(){
+    // 구해진 마우스 좌표를 이용하며 피카츄의 위치로 사용.
+    pica.style.left=parseFloat(pica.style.left)+a*(targetX-parseFloat(pica.style.left))+"px";
+    pica.style.top=parseFloat(pica.style.top)+a*(targetY-parseFloat(pica.style.top))+"px";
+}
+
+
+window.addEventListener("load",function(){
+    init();
+    setInterval("move()",10);
+});
+</script>
+</head>
+<body onMouseDown="getPos()"> 
+     <!-- 이벤트만 달라져도 부드럽게 움직여짐. -->
+<div class="wrapper">
+    <img src="../Images/other icons/pica.png" id="pica">
+    <img src="../Images/other icons/pocketball.png" id="pocketBall">
+</div>
+</body>
+</html>

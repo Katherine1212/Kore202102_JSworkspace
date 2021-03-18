@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infinity Scrolling</title>
+<style>
+#banner-frame{
+    width: 400px ;
+    height: 100px ;
+    margin: auto;
+    padding-top: 2px ;
+    box-sizing: border-box; /* padding과 margin에 영향을 주지/받지 않음 */
+    background-color: thistle;
+    position: relative;
+}
+</style>
+<script>
+var bannerFrame;
+var gap=5; //이미지간의 간격
+function init(){
+    bannerFrame=document.getElementById("banner-frame");
+    createAmongus();
+}
+
+// 액자 안에 이미지를 동적으로 생성하여 위치시키기
+function createAmongus(){
+    for(var i=1; i<9; i++){
+        var img= document.createElement("img");
+        img.src="../Images/Among Us/"+i+".png";
+        img.style.width=100+"px";
+        img.style.height=96+"px";
+        img.style.position="absolute";
+        img.style.left=(100+gap)*(i-1)+"px"; // 이미지 하나의 위치
+        bannerFrame.appendChild(img);
+    }
+
+    }
+function move(){
+    // 생성된 이미지 움직이기
+}
+
+window.addEventListener("load",function(){
+    init();
+});
+</script>
+</head>
+<body>
+<div id="banner-frame"></div>
+</body>
+</html>

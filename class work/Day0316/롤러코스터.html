@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rollercoster</title>
+<style>
+body{margin: 0px;}
+.wrapper{
+    width: 1200px;
+    height: 900px;
+    background-color: cadetblue;
+    overflow: hidden;
+}
+#content{
+    width: 1000px;
+    height: 100%;
+    background:url("../Images/background/rollercoster.png");
+    background-repeat: no-repeat;
+    background-size: 1000px 900px;
+    float: left;
+}
+#log{
+    width: 200px;
+    height: 100%;
+    background-color:teal;
+    float: left;
+}
+</style>
+<script>
+var content;
+var log;
+var pointArray=[]; //별의 쌍을 모아둔 이차원배열이 된 녀석. 현재는 일차원 배열
+var img; //---------- 주인공 이미지
+var index=0; //------- 2차원 배열을 순차적으로 접근하기 위한 변수
+function init(){ //-----------------------------초기화 작업
+    content= document.getElementById("content");
+    log= document.getElementById("log");
+    createHero(); //-------- 롤러코스터 탈 주인공
+}
+function createHero(){
+    img=document.createElement("img");
+    img.src="../Images/other icons/plane.png";
+    img.style.width=50+"px";
+    img.style.position="absolute";
+    img.style.left=100+"px";
+    img.style.top=100+"px";
+
+    content.appendChild(img); //----------------- 화면에 부착
+}
+function createPos(){ //------------------------- 마우스를 클릭한 위치와 동일한 위치에
+    var span=document.createElement("span");
+    span.innerText="★";
+    span.style.color="black";
+    span.style.fontSize=2+"px";
+    span.style.position="absolute";
+
+    // 한쌍의 x,y를 담을 배열
+    var x=event.clientX;
+    var y=event.clientY;
+    var pos=[ x, y]; // 별생성
+
+    // 생성된 점의 좌표 배열을 pointArray에 누적.
+    pointArray.push(pos);
+
+    // 클릭시 좌표 정보 남기기.
+    span.style.left=x+"px";
+    span.style.top=y+"px";
+    // 좌표 저장
+    content.appendChild(span);
+
+    printPos(); //기록 남기기
+}
+function printPos(){
+    var str=""; //--------------------------------- 로그에 누적 될 str 변수 선언
+    // 좌표가 누적된 pointArray의 데이터를 div에 출력
+    for(var i=0; i<pointArray.length; i++){ //------ 별 찍은 횟수 만큼
+        var box= pointArray[i]; //------------------ 안쪽 박스
+        str= str+"["+box[0]+","+box[1]+"] \n";
+    }
+    // 좌표가 누적 돈 pintArray의 데이터를 div에 출력
+    log.innerText="[x좌표, y좌표]";
+}
+//수동 움직이기 
+function move(){
+    //문서내의 img를 좌표를 이차원배열의 x,y 좌표를 이용하여 움직이기.
+    var x =pointArray[index][0];//-------------------------- x좌표
+    var y=pointArray[index][1];//--------------------------- y좌표
+
+    img.style.left=x+"px";
+    img.style.top=y+"px";
+    index++;
+}
+window.addEventListener("load", function(){
+    init();
+});
+</script>
+</head>
+<body>
+<div class="wrapper">
+    <div id="content" onMouseDown="createPos()"></div>
+    <div id="log"></div>
+</div>
+<button onClick="move()">수동</button>
+<button onClick="auto()">자동</button>
+</body>
+</html>

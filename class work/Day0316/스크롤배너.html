@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<script>
+// 모든걸 동적으로 처리 할 예정이므로 각종 정보르르 전역변수로 선언
+var container; //이미지를 올릴 컨테이너. 모든함수가 접근 가능하도록 전역 선언.
+var imgWidth=100; // 상품이미지 너비
+var imgHeight=100; // 상품이미지의 높이
+var gap=5; // 이미지 간 간격
+var imgCount=3; // 액자에 보여질 이미지 수
+// [배너에 사용 할 이미지]
+// 1. New Array()를 통해 생성하는 방법.
+// 2. =[]선언과 동시에 값까지 할당하는 방법
+var imgArray=["aa.jpg","ab.jpg","ax.jpg","bm.jpg","et.jpg","kg.jpg","mx.jpg","pk.jpg","ub.jpg","ya.jpg"];
+var bannerImg=[]; // img 태그 자체를 담을 변수
+//임계점에 도달한 모든 이미지가 가야 할 곳
+var targetX=0; 
+// 흐름을 동작 시킬지 여부 결정하는 논리값.
+var flag=true;
+
+function init(){
+    createFrame();
+    createImg();
+    targetX=(bannerImg.length-1)*(imgWidth+gap);
+    setInterval("flowImg()",100); // 배너 흘려보내기
+    // 1회성은 flowImg()
+}   
+// 액자만들기
+function createFrame(){
+    //프레임을 동적으로 생성하자
+    container=document.createElement("div"); //이미지들을 올려놓을 액자 컨테이너
+    container.style.background="red";
+    container.style.width=gap+ ((imgWidth+gap)*imgCount)+"px";
+    container.style.height=(gap*2)+imgHeight+"px";
+    container.style.margin="auto";
+    container.style.position="relative";
+    container.style.overflow="hidden";
+    
+    //바디에 부착!!
+    document.body.appendChild(container);
+}
+
+//이미지 생성하기 
+function createImg(){
+   for(var i=0; i<imgArray.length; i++){// 보유한 이미지 배열 수 만큼
+        var img=document.createElement("img");
+        img.src="../Images/travel2/"+imgArray[i];
+        img.style.width=imgWidth+"px";
+        img.style.height=imgHeight+"px";
+        img.style.position="absolute";
+        img.style.left=gap+(imgWidth+gap)*i+"px";
+        img.style.top=gap+"px";
+
+        //이미지에 마우스이벤트 연결
+        img.addEventListener("mouseover",function(){
+            flag=false;
+        });
+        img.addEventListener("mouseout",function(){
+            flag=true;
+        });
+        
+        //프레임에 부착
+        container.appendChild(img);
+
+        bannerImg.push (img);
+    }
+}
+// 액자 안의 모든 이미지를 음수 방향으로 움직이자.
+function flowImg(){
+    if(flag){
+        for(var i=0; i<bannerImg.length; i++){
+            bannerImg[i].style.left=parseInt(bannerImg[i].style.left)-5+"px";
+            // 이동 하다가, 우리가 정한 임계 지점에 도달하면 다시 원하는 위치로 순환.
+            if(parseInt(bannerImg[i].style.left) < -(imgWidth+gap)){
+                console.log("저 도달했어요;ㅅ;")
+                bannerImg[i].style.left=targetX+"px"; // 목표 지점으로 이동.
+            }
+        }
+    } 
+}
+
+window.addEventListener("load", function(){
+    init();            
+}); 
+</script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+
+<script>
+    var pica;
+    var targetX=500; // 피카츄가 도달 할 목표 지점.
+    var a=0.1; // 비율을 표현하는 비율계수
+//  [옵션 1. JS에서 스타일 지정]
+    // 문서가 로드 되면 피카츄의 스타일의 포지션 값을 JS에서 지정
+    window.addEventListener("load", function(){
+        pica=document.getElementById("pica");
+        pica.style.position="absolute";
+        pica.style.left=0+"px";
+        pica.style.top=200+"px";
+        pica.style.width=100+"px";
+    });
+    function move(){
+        /* 목표 지점에 한걸음에 도착하면 순간이동이 되므로 자연스럽지 못함.
+        조금 더 부드러운 효과를 내려면 감속도 처리를 해야하고,
+        이 감속도 처리는 많은 분야의 애니메이션에서 이용. */
+        
+        // pica.style.left=targetX+"px"; //순간이동
+        // 공식: 물체 위치=현재 위치+a*(목표지점-현재 내 위치)
+        pica.style.left=parseInt(pica.style.left)+a*(targetX-parseInt(pica.style.left))+"px";
+        // 위 식처럼 쓰게되면 style시트로 작성하는 것이 아니라 인라인 방식으로 작성해야 접근 가능함.
+        setTimeout("move()",10);
+    }
+</script>
+</head>
+<body>
+<button onclick="move()">움직이기</button>
+<img src="../Images/other icons/pica.png" id="pica">
+<!-- [옵션 2. 인라인 방식]
+    style="position: absolute;left: 0px;top: 200px;width: 100px;"  -->
+ 
+</body>
+</html>

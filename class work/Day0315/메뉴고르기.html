@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>결정장애 모여라</title>
+<script>
+var food=["라면","김밥","쌀국수","마라탕","닭가슴살","짜장면","파스타","국밥","초밥"];
+function getRandom(){
+    // console.log("당신이 선택 할 수 있는 음식의 수는 ",9); //이런거는 하드 코딩(항상 메뉴가 9개이지 않으니까)
+    console.log("당신이 선택 할 수 있는 음식의 수는 ",food.length); //프로그램에서 개수를 구해줌
+    // 함수.length는 배열의 길이 -->늘 정수로 나옴
+    var r= parseInt(Math.random()*food.length); //배열 내 숫자와 일치하지 않으면 undefined나오니, 수일치 시키면 해결
+    console.log("오늘의 추천 메뉴는:", food[r]);
+}
+</script>
+</head>
+<body>
+<button onclick="getRandom()">랜덤 값 구하기</button>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auto Timer</title>
+<style>
+#wrapper{
+    margin: auto;
+    width: 600px;
+    background-color:thistle;
+    position: relative;
+    text-align: center;
+}
+
+#wrapper input{
+    font-size: 100px;
+    width: 150px;
+    text-align: right;
+}
+</style>
+
+<script>
+var t_hour;
+var t_min;
+var t_sec;
+// 시 분 초를 담을녀석
+var hour=0;
+var min=0;
+var sec=0;
+// 시작 정지버튼
+var timer;
+
+// 0에 대한 처리를 해 주는 함수
+function getZeroString(n){
+/* 이 함수를 호출하는 자가 n에 숫자를 넘기되, 
+10 미만이면 앞에 0을 추가. 10이상이면 숫자만 반환. */
+    var result;
+    if(n<10){
+        //10보다 작니?
+        result="0"+n; //어느 한쪽이 문자이면 연산자가 연결자로 바뀜.
+    }else{
+        result=n;
+    }
+    return result; // 반환
+}
+
+function init(){
+    t_hour= document.getElementById("t_hour");
+    t_min= document.getElementById("t_min");
+    t_sec= document.getElementById("t_sec");
+    // 값 초기화
+    t_hour.value=0;
+    t_min.value=0;
+    t_sec.value=0;
+    // 시,초,분 초기화
+    hour=0;
+    min=0;
+    sec=0;   
+}
+
+// 초 증가시키기
+function countUp(){
+    /* 10초 미만은0n으로 출력
+    앞의 0은 문자열로 출력.*/
+    sec=sec+1;
+    t_sec.value=getZeroString(sec);
+    if(sec==60){
+        sec=0;//0으로 돌아온 후 출력
+        min=min+1;
+        t_min.value=getZeroString(min);   
+    }
+    if(min==60){
+        min=0;
+        hour=hour+1;
+        t_hour.value=getZeroString(hour);
+    }
+    if(hour==99){
+        sec=0;
+        min=0;
+        hour=0;
+
+    }
+} 
+
+function countStart(){
+    autoCheck=true;
+    timer= setInterval(function(){
+        countUp();
+    },1000);
+}
+function countStop(){
+    autoCheck= false;
+    clearTimeout(timer,0);
+}
+window.addEventListener("load",function(){
+    init();
+});
+</script>
+</head>
+<body>
+    <div id="wrapper">
+        <input type="text" id="t_hour">시
+        <input type="text" id="t_min">분    
+        <input type="text" id="t_sec">초
+        <p>  
+        <button onclick="countStart()">start</button>    
+        <button onclick="countStop()">stop</button>    
+    </div>
+</body>
+</html>
