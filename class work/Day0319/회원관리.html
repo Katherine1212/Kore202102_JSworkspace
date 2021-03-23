@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+    #wrapper{
+        width: 1000px;
+        height: 600px;
+        background-color: thistle;
+        margin: auto;
+        overflow: hidden;
+    }
+    #registArea, #detailArea{
+        width: 150px;
+        height: 100%;
+        background-color:pink;
+        float: left;
+    }
+    #registArea input, #detailArea input{
+        width: 90%;
+        font-size: 15px;
+        font-weight: bold;
+        border-radius: 5%;
+        background-color:lightgrey;
+        border: 1px solid black;
+    }
+    #listWrapper{
+        width: 700px;
+        height: 100%;
+        /* background-color: rosybrown; */
+        float: left;
+        position: relative;
+    }
+</style>
+<script src="../JS/돋보기.js"></script>
+<script>
+var listArea;
+var t_id,t_name,t_phone,t_asset;
+var d_id,d_name,d_phone,d_asset;
+var memberArray=[]; // 일차원을 이차원 배열로 바꾸기
+
+// 입력 양식에 등록 한 데이터를 보관 후 테이블로 출력.
+// 데이터 등록
+function regist(){
+    if(isNaN(t_asset.value)){ // 참=문자, 거짓=숫자
+        alert("숫자를 기입 하십시오.");
+        t_asset.value="";
+        t_asset.focus();
+        return; // 함수 호출한 곳으로 복귀
+    }
+    var member=[]; // 빈배열 선언
+    member[0]=t_id.value;
+    member[1]=t_name.value;
+    member[2]=t_phone.value;
+    member[3]=t_asset.value;
+    //-------- 한 사람의 정보가 메모리에 적립.----------------
+    // 이차원 배열에 추가
+    memberArray.push(member);
+
+    getList(); // 등록 된 데이터를 시각화하기 위해 호출
+}
+// 데이터 테이블로 출력
+function getList(){
+// 문자 누적
+    var tag="<table width=\"100%\" border=\"1\">";
+    tag+="<tr>";    
+    tag+="<td>No</td>";
+    tag+="<td>ID</td>";
+    tag+="<td>Name</td>";
+    tag+="<td>Phone</td>";
+    tag+="<td>Asset</td>";                
+    tag+="</tr>"; 
+    
+    var sum=0;
+
+    for(var i=memberArray.length-1; i>=0; i--){ // 층수만큼 반복
+        tag+="<tr>";   
+        tag+="<td>"+(i+1)+"</td>";
+            for(var a=0; a<memberArray[i].length; a++){
+                tag+="<td>"+memberArray[i][a]+"</td>";      
+            } 
+        // Asset은 memberArray[i][3]이므로 sum에 누적
+        // for(a==3) 하고 3자리에 a 대입도 가능.(for문 안에 작성 시에만!!)
+        sum=sum+parseInt(memberArray[i][3]);   // 자산 누적은 층마다 행해야 하므로 for문 밖
+        tag+="</tr>"; 
+    }
+    /* 이렇게도 가능한 것을 for문을 이용해 짧게 줄임
+    for(var i=0; i<memberArray.length; i++){ // 층수만큼 반복
+        tag+="<tr>";   
+        tag+="<td>"+i+"</td>";
+        tag+="<td>"+memberArray[0][0]+"</td>";
+        tag+="<td>"+memberArray[0][1]+"</td>";
+        tag+="<td>"+memberArray[0][2]+"</td>";
+        tag+="<td>"+memberArray[0][3]+"</td>";                
+        tag+="</tr>"; 
+    }
+    */
+    tag+="<tr>";
+    tag+="<td colspan='5' align='right'>가입 회원 수:"+memberArray.length+"명,누적 자산:"+sum+"원</td>";
+    tag+="</tr>";
+    tag+="</table>";
+
+    listArea.innerHTML=tag;
+
+}
+// 초기화&로드 후 초기화
+function init(){
+    listArea=document.getElementById("listArea");
+// 등록용 (좌측)
+    t_id=document.getElementById("t_id");
+    t_name=document.getElementById("t_name");
+    t_phone=document.getElementById("t_phone");
+    t_asset=document.getElementById("t_asset");
+// 상세 보기용 (우측)
+    d_id=document.getElementById("d_id");
+    d_name=document.getElementById("d_name");
+    d_phone=document.getElementById("d_phone");
+    d_asset=document.getElementById("d_asset");
+    getList();
+}
+window.addEventListener("load",function(){
+    init();
+})
+</script>
+</head>
+<body>
+<div id="wrapper">
+    <div id="registArea">
+        <input type="text" placeholder="ID 입력" id="t_id">
+        <input type="text" placeholder="이름 입력" id="t_name">
+        <input type="text" placeholder="연락처 입력" id="t_phone">
+        <input type="text" placeholder="현금자산 입력" id="t_asset">
+        <button onclick="regist()">등록</button>
+    </div>
+    <div id="listWrapper">
+        <div id="searchArea">
+            <select>
+                <option value="">선택</option>
+                <option value="">ID 검색</option>
+                <option value="">이름 검색</option>
+                <option value="">연락처 검색</option>
+            </select>
+            <input type="text" placeholder="검색어 입력">
+            <button style='font-size:15px'>Search <i class='fas fa-search'></i></button>
+        </div>
+        <div id="listArea"></div>
+    </div>
+    <div id="detailArea">
+        <input type="text" placeholder="ID 입력" id="d_id">
+        <input type="text" placeholder="이름 입력" id="d_name">
+        <input type="text" placeholder="연락처 입력" id="d_phone">
+        <input type="text" placeholder="현금자산 입력" id="d_asset">
+        <button>Edit</button>
+        <button>Del</button>
+    </div>
+</div>
+</body>
+</html>

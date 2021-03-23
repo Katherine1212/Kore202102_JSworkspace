@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+#wrapper{
+    width:1200px;
+    height:600px;
+    background-color:lightsteelblue;
+    margin: auto;
+    overflow: hidden;
+}
+#dashboard{
+    width: 200px;
+    height: 100%;
+    background-color: mistyrose;
+    float: left;
+}
+#content{
+    width:1000px;
+    height:100%;
+    background-color:  palevioletred;
+    float:left;
+    position: relative;     /* span이 자식이여서 */
+    background-image: url(../Images/background/베네치아.png);
+    background-size: cover;
+}
+#content span{
+   /* border-radius: 10%;
+    padding: 5px; */
+    font-weight: bold;
+    color: white;
+}
+#dashboard input{
+    width:95%;
+    font-size:20px;
+    background-color: plum;
+    color: black;
+    font-weight: bold;
+}
+#hpBox{
+    width:100%;
+    height:190px;
+    margin-top:50px;
+    box-sizing: border-box;
+    padding:4px 2px 2px 2px; /*left  top  right  bottom*/
+}
+#scoreArea{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 100px;
+}
+</style>
+<script src="../JS/모음.js"></script>
+<script>
+var hpBox;
+var content;
+var scoreArea;
+var keyword;
+// [단어]
+var txtArray=[
+    ["코로나","마스크","마우스","핸드폰","노트북","파이썬","자바","리엑트","리눅스","애플"],
+    ["메론","딸기","커피","달고나","밤","낮","해","바다","강릉","게임"],
+    ["지하철","사과","지갑","건널목","블랙홀","아비규환","전기","도서관","아스팔트","나무"],
+    ["방송국","구두","식량","온난화","버섯","늦잠","노트북","염치","학교","주사"]
+]
+// [단어를 담는 배열]
+var spanArray=[]; //단어가 10개 이상이므로 span도 배열로 담자.
+// [내려오는 속도]
+var velY=10; // 몇 발자국씩 내려올지 속도를 결정하는 변수
+var dropFlag=true; // 처음에는 단어가 떨어져야하므로
+// hpBox 상자들이 순서가 있어야 차례대로 삭제 가능
+var hpArray=[];
+// [점수]
+var score=0; // 점수를 누적 시킬 전역 변수
+
+//[초기화]
+function init(){
+    hpBox = document.getElementById("hpBox");
+    content = document.getElementById("content");
+    scoreArea = document.getElementById("scoreArea");
+    keyword= document.getElementById("keyword");
+
+    // 단어를 입력 완료하는 시점.
+    keyword.addEventListener("keyup", function(){
+        if(event.keyCode==13){
+            for(var i=0; i<spanArray.length; i++){
+                if(spanArray[i].innerText==keyword.value){
+
+                    // 제거 함수 호출
+                    removeObject(content,spanArray[i],spanArray,i);
+
+                    keyword.value="";// 텍스트 입력 초기화
+                    score+=10; //10누적
+                    printScore();// 점수 출력
+                }
+            }
+            // 반복문에 의해 단어 1개가 사라질 때 마다 남은 단어 여부 체크.
+            // 남은 단어 0개== 미션 완료
+            checkSuccess();
+        }
+    });
+}
+// [HP 상자 생성]
+function createHp(){
+    // hp박스를 div로 생성(총 9개)
+    for(var i=0;i<9;i++){
+        var rect=document.createElement("div");
+        rect.style.width=60+"px";
+        rect.style.height=50+"px";
+        rect.style.backgroundColor="plum";
+        rect.style.border="1px solid purple";
+        rect.style.borderRadius=15+"%";
+        rect.style.float="left";
+        
+        hpBox.appendChild(rect);
+
+        // 메모리에도 순서대로 쌓기
+        hpArray.push(rect);
+    }
+}
+// [점수 출력]
+function printScore(){
+    scoreArea.innerText=score+"점";
+}
+// [단어 생성]
+function createWord(){
+    /* 단어를 감싸게 될 요소의 선택기준 
+    단어의 길이만큼 감쌀 수 있는 inline방식 중 하나 선택하기.*/
+    var n=getRandom(txtArray.length); // 몇번째 배열을 사용할지 결정짓는 랜덤값
+    for(var i=0; i<txtArray.length; i++){
+        var span= document.createElement("span");
+        span.innerText=txtArray[n][i];
+        span.style.position="absolute"; // content-div기준으로 위치 지정
+        // 위치
+        span.style.left=0+(100*i)+"px"; 
+        //0~300
+        span.style.top= -getRandom(300)+"px"; // 값이 일률적이면 재미가 없으니 랜덤값 주기.
+        
+        content.appendChild(span);
+        // 지역변수인 span이 죽기 전에 spanArray에 담기
+        spanArray.push(span);
+    }
+}
+// [단어 점점 내려오는 함수]
+function dropDown(){
+    if(dropFlag){ // setInterval을 멈추지 말고 조건으로 처리
+        // 단어 하나씩 내려오지 말고 한번에 내리기.
+        for(var i=0; i<spanArray.length; i++){
+            // yArray[i]=yArray[i]+velY; // 각 자신 위치부터 ~~씩
+            spanArray[i].style.top=parseInt(spanArray[i].style.top)+velY+"px";
+    
+            // 지금 떨어지고 있는 span은 스스로 600을 넘어섰는지 확인.
+            if(parseInt(spanArray[i].style.top)>=600){
+                // 단어 제거
+                removeObject(content,spanArray[i],spanArray,i);
+                // hp 깎기
+                // hp 존재 시에만(hp는 9개, span은 10개라 if조건때문에 한번 더 실행되면서 오류뜨는걸 잡기위해)
+                if(hpArray[hpArray.length-1]!=undefined){ 
+                    // hpArray[막내]==hpArray[남은 배열의 마지막-1]
+                    removeObject(hpBox,hpArray[hpArray.length-1],hpArray,hpArray.length-1);
+                }
+            }
+        }
+        // hp소진되도 hp남아있으면 스테이지 클리어
+            checkSuccess();
+        // hp 소진시 게임 실패
+        if(hpArray.length<=0){
+            dropFlag=false;
+            alert("스테이지 종료.");
+            if(confirm("미션 실패\n 게임을 재도전 하시겠습니까?")){ // 확인. 게임 재실행
+                location.reload(); // 페이지 새로고침
+            }else{ // 취소 시 게임 종료
+
+            }
+        }
+
+    }
+}
+function checkSuccess(){
+    // 남은 단어 여부 확인(즉, spanArray가 0). 없으면 성공!
+    if(spanArray.length<=0 && hpArray.length>0){ // 단어 소진&hp가 1개라도 남아있어야! 성공
+        alert("1단계 클리어.");
+        dropFlag=false; // 게임 끝나면 dropDown도 종료
+    }
+}
+// [오브젝트 삭제]
+function removeObject(container,child,arrays,index){
+    // 1. 화면에서 삭제 (부모 div로부터 삭제)
+    container.removeChild(child);
+    // 2. 메모리상 삭제(배열 삭제)
+    arrays .splice(index,1);
+
+}
+
+window.addEventListener("load",function(){
+    init();
+    createHp();
+    printScore();
+    createWord();
+    setInterval("dropDown()",300);
+    keyword.focus();
+});
+</script>
+</head>
+<body>
+<div id="wrapper">
+    <div id="dashboard">
+        <div id="hpBox"></div>
+        <input type="text" placeholder="단어 입력" id="keyword">
+        <div id=scoreArea></div>
+    </div>
+    <div id="content"></div>
+</div>
+</body>
+</html>

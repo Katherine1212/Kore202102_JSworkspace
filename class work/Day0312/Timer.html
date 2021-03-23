@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+#wrapper{
+    margin: auto;
+    width: 600px;
+    background-color:thistle;
+}
+#wrapper input{
+    font-size: 100px;
+    width: 150px;
+    text-align: right;
+}
+</style>
+<script>
+var t_hour;
+var t_min;
+var t_sec;
+// 시 분 초를 담을녀석
+var hour=0;
+var min=0;
+var sec=0;
+
+// 0에 대한 처리를 해 주는 함수
+function getZeroString(n){
+/* 이 함수를 호출하는 자가 n에 숫자를 넘기되, 
+10 미만이면 앞에 0을 추가. 10이상이면 숫자만 반환. */
+    var result;
+    if(n<10){
+        //10보다 작니?
+        result="0"+n; //어느 한쪽이 문자이면 연산자가 연결자로 바뀜.
+    }else{
+        result=n;
+    }
+    return result; // 반환
+  
+}
+
+function init(){
+    t_hour= document.getElementById("t_hour");
+    t_min= document.getElementById("t_min");
+    t_sec= document.getElementById("t_sec");
+    t_hour.value=0;
+    t_min.value=0;
+    t_sec.value=0;
+    
+    hour=0;
+    min=0;
+    sec=0;
+}
+function countUp(){
+    // 초 증가시키기
+    /* 10초 미만은0n으로 출력
+    앞의 0은 문자열로 출력.*/
+   
+    
+    sec++; // ------------------------------------- 초단위 계속 더해주기
+    t_sec.value = getZeroString(sec);//------------ ui에 초단위 송출
+    if(sec == 60){// ------------------------------초가 60초가 되는 순간
+        sec = 0;//---------------------------------초는 0으로 바뀐다.
+        t_sec.value = getZeroString(sec);// ------ Ui에 초단위 송출
+        min = min+1;// --------------------------- 분단위 숫자 + 1 로 변동
+        t_min.value = getZeroString(min);// ------ Ui에 분단위 송출
+
+    }
+
+    if(min == 60){// ----------------------------분이 60이 되는 순간
+        min =0;// -------------------------------분단위 0으로 바뀐다.
+        t_min.value = getZeroString(min);// -----ui에 분단위 송출
+        hour = hour + 1;// ----------------------시간단위 숫자 + 1 로 변동
+        t_hour.value = getZeroString(hour);// ---UI에 시간단위 송출
+    }
+    
+    setInterval(getZeroString(n),1000);
+}
+window.addEventListener("load",function(){
+    init();
+    });
+</script>
+</head>
+<body>
+    <div id="wrapper">
+        <input type="text" id="t_hour">시
+        <input type="text" id="t_min">분    
+        <input type="text" id="t_sec">초
+        <p>  
+        <button onclick="countUp()">수동</button>    
+        
+    </div>
+</body>
+</html>
