@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>갤러리</title>
+<style>
+.wrapper{
+    margin: auto;
+    width: 500px;
+    height: 500px;
+    background-color: antiquewhite;
+}
+#pic{
+    width: 100%;
+    height: 450px;
+    background-color: darkgray;
+}
+#pic img{
+    width: 100%;
+    height: 100%;
+}
+#control{
+    width: 100%;
+    height: 50px;
+    background-color: darkseagreen;
+    position: relative;
+}
+#bt-prev{
+    position: absolute;
+    left:0px;
+    top:25%;
+}
+#bt-next{
+    position: absolute;
+    right:0px;
+    top:25%;
+}
+</style>
+<script>
+// 이미지명에 규칙이 없었기 때문에 이미지명에 규칙을 부여
+var pic=["aa.jpg","ab.jpg","ax.jpg","bm.jpg","et.jpg","kg.jpg","mx.jpg","pk.jpg","ub.jpg","ya.jpg"];
+var n=0; //이미지 접근을 위한 index
+
+function next(){
+    n++
+    var collect= document.getElementById("collection");
+    collect.src="../Images/travel2/"+pic[n];
+}
+</script>
+</head>
+<body>
+<div class="wrapper">
+    <div id="pic">
+        <img src="../Images/travel2/aa.jpg" id="collection">
+    </div>
+    <div id="control">
+        <button id="bt-prev" onclick="prev()">prev</button>
+        <button id="bt-next" onclick="next()">next</button>
+    </div>
+</div>    
+</body>
+</html>

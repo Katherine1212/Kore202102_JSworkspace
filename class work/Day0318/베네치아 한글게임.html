@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+#wrapper{
+    width:1200px;
+    height:600px;
+    background-color:lightsteelblue;
+    margin: auto;
+    overflow: hidden;
+}
+#dashboard{
+    width: 200px;
+    height: 100%;
+    background-color: mistyrose;
+    float: left;
+}
+#content{
+    width:1000px;
+    height:100%;
+    background-color:  palevioletred;
+    float:left;
+    position: relative;     /* span이 자식이여서 */
+}
+#dashboard input{
+    width:95%;
+    font-size:20px;
+    background-color: plum;
+    color: black;
+    font-weight: bold;
+}
+#hpBox{
+    width:100%;
+    height:190px;
+    margin-top:50px;
+    box-sizing: border-box;
+    padding:4px 2px 2px 2px; /*left  top  right  bottom*/
+}
+#scoreArea{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 100px;
+}
+</style>
+<script src="../JS/모음.js"></script>
+<script>
+var hpBox;
+var content;
+var scoreArea;
+var keyword;
+// [단어]
+var spanArray=[]; //단어가 10개 이상이므로 span도 배열로 담자.
+// var span; // 내려올 단어
+var yArray=[]; // 단어의 초기 위치
+var velY=10; // 몇 발자국씩 내려올지 속도를 결정하는 변수
+// [점수]
+var score=0; // 점수를 누적 시킬 전역 변수
+// [배열]
+var txtArray=["코로나","마스크","마우스","핸드폰","노트북","파이썬","자바","리엑트","리눅스","애플"];
+
+function init(){
+    hpBox = document.getElementById("hpBox");
+    content = document.getElementById("content");
+    scoreArea = document.getElementById("scoreArea");
+    keyword= document.getElementById("keyword");
+
+    // 단어를 입력 완료하는 시점.
+    keyword.addEventListener("keyup", function(){
+        if(event.keyCode==13){
+            for(var i=0; i<spanArray.length; i++){
+                if(spanArray[i].innerText==keyword.value){
+                    // 화면에 부착=appendChild, 제거=removeChild
+                    content.removeChild(spanArray[i]);
+                    // 배열에서 삭제=splice(index;몇번째,how much;몇번?)(안 배웠지만)
+                    spanArray.splice(i,1);
+                    console.log("남은 단어수: ",spanArray.length);
+
+                    keyword.value="";// 텍스트 입력 초기화
+                    score+=10; //10누적
+                    printScore();// 점수 출력
+                }
+            }
+        }
+    });
+}
+function createHp(){
+    // hp박스를 div로 생성(총 9개)
+    for(var i=0;i<9;i++){
+        var rect=document.createElement("div");
+        rect.style.width=60+"px";
+        rect.style.height=50+"px";
+        rect.style.backgroundColor="plum";
+        rect.style.border="1px solid purple";
+        rect.style.borderRadius=15+"%";
+        rect.style.float="left";
+    
+        hpBox.appendChild(rect);
+    }
+}
+// 점수 출력
+function printScore(){
+    scoreArea.innerText=score+"점";
+}
+// 단어 생성
+function createWord(){
+    /* 단어를 감싸게 될 요소의 선택기준 
+    단어의 길이만큼 감쌀 수 있는 inline방식 중 하나 선택하기.*/
+    for(var i=0; i<txtArray.length; i++){
+        var span= document.createElement("span");
+        span.innerText=txtArray[i];
+        span.style.backgroundColor="white";
+        span.style.position="absolute"; // content-div기준으로 위치 지정
+        // 위치
+        span.style.left=0+(100*i)+"px"; 
+        //0~300
+        yArray[i]= -getRandom(300); // 각 span 마다 다른 값을 가져야 하므로 y를 배열로뻼
+        span.style.top=yArray[i]+"px"; // y값이 일률적이면 재미가 없으니 랜덤값 주기.
+        
+        content.appendChild(span);
+        // 지역변수인 span이 죽기 전에 spanArray에 담기
+        spanArray.push(span);
+    }
+}
+// 단어 점점 내려오는 함수
+function dropDown(){
+    // 단어 하나씩 내려오지 말고 한번에 내리기.
+    for(var i=0; i<spanArray.length; i++){
+        yArray[i]=yArray[i]+velY; // 각 자신 위치부터 ~~씩
+        spanArray[i].style.top=yArray[i]+"px"; 
+
+        // 지금 떨어지고 있는 span은 스스로 600을 넘어섰는지 확인.
+        if(yArray[i]>582){
+            console.log(i+"번째인 나는 지옥 가즈앍");
+        }
+    }
+}
+
+window.addEventListener("load",function(){
+    init();
+    createHp();
+    printScore();
+    createWord();
+    setInterval("dropDown()",300);
+    keyword.focus();
+});
+</script>
+</head>
+<body>
+<div id="wrapper">
+    <div id="dashboard">
+        <div id="hpBox"></div>
+        <input type="text" placeholder="단어 입력" id="keyword">
+        <div id=scoreArea></div>
+    </div>
+    <div id="content"></div>
+</div>
+</body>
+</html>

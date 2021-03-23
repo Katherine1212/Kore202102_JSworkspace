@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<script src="../JS/ball.js"></script> <!-- 볼 감쌀 틀과 볼등장 -->
+<script src="../JS/모음.js"></script> <!-- getRandom -->
+<script>
+var wrapper;
+var balls=[]; // 볼 여러개를 가리킬 수 있는 전역변수
+var ballArray=["FastBall.png","GreatBall.png","GreatBall2.png","LoveBall.png","LureBall.png","MasterBall.png","pocketball.png","PokeBall2.png","SafariBall.png","SportsBall.png","UltraBall.png"];
+function init(){
+    createWall();
+}
+// 공을 가둘 벽
+function createWall(){
+    wrapper= document.createElement("div");
+    wrapper.style.width=800+"px";
+    wrapper.style.height=700+"px";
+    wrapper.style.margin="auto";
+    wrapper.style.border=5+"px solid red";
+    wrapper.style.position="relative";
+    document.body.appendChild(wrapper);
+}
+function createBall(){
+    var velX=getRandom(10)+1;
+    var velY=getRandom(10)+1;
+    var ball= new Ball(wrapper
+    ,"../Images/pocketmon/"+ballArray[getRandom(ballArray.length)]
+    ,35,35,velX,velY); // 생성되는 공은 wrapper에 부착
+    balls.push(ball); // 볼을 담아둔 배열에 방금 태어난 볼추가
+}
+// 키보드의 스페이스바 누르면 팝핑볼 시작
+function space(){
+    if(event.keyCode==32){
+        createBall();
+    }
+}
+function gameLoop(){
+    for(var i=0; i<balls.length; i++){ // 공 생성 전에 무브하는 것을 방지
+        balls[i].move();
+    }
+}
+window.addEventListener("load",function(){
+    init();
+    setInterval("gameLoop()",10)
+});
+</script>
+</head>
+<body onkeydown="space()">
+</body>
+</html>

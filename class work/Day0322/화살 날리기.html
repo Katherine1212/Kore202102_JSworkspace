@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<script src="../JS/모음.js"></script>
+<script>
+var arrow=[]; // 화살을 개수만큼 받아야 하니 배열로 빼기
+var colorArray=["red","orange","yellow","green","blue","navy","purple"];
+var shapeArray=["➜","↣","↝","⇀","⇻","⟿","⤀","⟴","⤕","⤔","⤗","➫","➱","➱"]
+
+/* 일회성이 아닌 계속 사용할 코드 영역을 지정한 후 선언. 
+전산에서는 이 코드단위를 CLASS라고 한다.
+2015년부터 ECMAScript(javaScript명칭)에서는 class 지원하기 시작.
+class는 자바, c#등에서 첫 철자를 대문자로 작성하는 것이 약속. */
+class Arrow{ // 화살을 만들 틀.(즉, 물건이 아니다.)
+    /* 자바스크립트에서는 사물이 보유한 변수는 constructor()라는 함수
+    즉 생성자 함수 내에 작성해야하는 규칙이 있다. */
+    constructor(y,color,vevlX,shap){
+        this.span;
+        this.velX=vevlX; // X좌표의 속도
+        this.x=0; // x좌표
+        this.y=y;
+        this.color=color;
+        this.shap=shap;
+    }
+    /* 사물이 보유한 함수를 가리켜, 그 사물의 동작 방식 또는 방법을 표현한다고 하여 
+    method라고 한다.*/
+    init(){
+        this.span=document.createElement("span");
+        this.span.style.position="absolute";
+        this.span.style.left=0+"px";
+        this.span.style.top=this.y+"px";
+        this.span.innerText=this.shap;
+        this.span.style.fontSize=20+"px";
+        this.span.style.fontWeight="bold";
+        this.span.style.color=this.color;
+        document.body.appendChild(this.span); // Body에 부착
+    }
+    move(){
+        this.x=this.x+this.velX; // 즉, x=x+10px -> 10씩 누적
+        this.span.style.left=this.x+"px"
+    }
+}
+
+// 화살을 날릴 함수
+function auto(){
+    for(var i=0; i<arrow.length; i++){
+        arrow[i].move();
+    }
+}
+window.addEventListener("load",function(){
+    // 원하는 만큼 class Arrow로부터 화살을 생성.
+    for(var i=0; i<100; i++){
+        arrow[i]=new Arrow(i*20,colorArray[getRandom(colorArray.length)],getRandom(20)+1,shapeArray[getRandom(shapeArray.length)] ); // constructor()생성자 함수의 매개변수에 y값 전달
+        arrow[i].init();
+        arrow[i].move();
+    }
+    
+    setInterval("auto()",100);
+});
+</script>
+</head>
+<body>
+</body>
+</html>
